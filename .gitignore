@@ -1,8 +1,7 @@
 chroma_db/
-data/raw/
-data/scraped/
 __pycache__/
 *.pyc
 .env
 .venv/
 venv/
+go 
