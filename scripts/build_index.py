@@ -4,14 +4,13 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import CHROMA_DIR
-from src.document_loader import load_pdfs
-from src.text_splitter import split_documents
-from src.vector_store import add_documents
+from src.document.loader import load_pdfs
+from src.document.splitter import split_documents
+from src.rag.store import add_documents
 
 
 def main():
     pdf_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "raw")
-    scraped_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "scraped", "articles.json")
 
     print("=== Building Vector Store ===\n")
 
@@ -24,16 +23,6 @@ def main():
         all_docs.extend(pdfs)
     else:
         print("   Tidak ada PDF ditemukan")
-
-    # print("\n2. Scraping artikel OJK...")
-    # web_docs = scrape_ojk(max_articles=10)
-    # if web_docs:
-    #     print(f"   Berhasil scrape {len(web_docs)} artikel")
-    #     save_scraped(web_docs, scraped_path)
-    #     all_docs.extend(web_docs)
-    # else:
-    #     print("   Memuat artikel yang sudah di-scrape...")
-    #     all_docs.extend(load_scraped(scraped_path))
 
     if not all_docs:
         print("\nTidak ada dokumen ditemukan!")

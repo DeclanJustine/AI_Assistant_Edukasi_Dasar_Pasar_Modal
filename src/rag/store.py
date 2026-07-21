@@ -24,5 +24,5 @@ def add_documents(chunks, persist_dir: str = CHROMA_DIR):
 def get_retriever(persist_dir: str = CHROMA_DIR):
     return get_vectorstore(persist_dir).as_retriever(
         search_type="similarity",
-        search_kwargs={"k": 6},
+        search_kwargs={"k": RETRIEVER_K},
     )

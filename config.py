@@ -6,4 +6,4 @@ CHROMA_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
 COLLECTION_NAME = "pasar_modal"
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 100
-RETRIEVER_K = 4
+RETRIEVER_K = 10

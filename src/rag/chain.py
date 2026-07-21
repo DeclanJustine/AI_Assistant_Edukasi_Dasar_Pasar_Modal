@@ -6,9 +6,9 @@ from langchain_classic.chains.combine_documents import create_stuff_documents_ch
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from config import LLM_MODEL
-from src.vector_store import get_retriever
-from src.prompt_templates import qa_prompt, history_rewriter_prompt
-from src.history import get_session_history
+from src.rag.store import get_retriever
+from src.rag.prompts import qa_prompt, history_rewriter_prompt
+from src.rag.history import get_session_history
 
 NORMALISASI_INPUT = {
     "reksadana": "reksa dana",
@@ -16,7 +16,7 @@ NORMALISASI_INPUT = {
 
 
 def get_llm():
-    return ChatOllama(model=LLM_MODEL, temperature=0.0)
+    return ChatOllama(model=LLM_MODEL, temperature=0.0, max_tokens=250)
 
 
 def normalisasi(query: str) -> str:

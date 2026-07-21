@@ -55,35 +55,46 @@ Proses: membaca PDF → chunking (chunk_size=500, overlap=100) → embedding (pa
 
 ### 5. Jalankan
 
-**Streamlit (Web UI):**
-```bash
-streamlit run app/main.py
-```
-
 **CLI (Terminal):**
 ```bash
 python cli.py
 ```
 
+**Web UI (Next.js + FastAPI):**
+```bash
+# Terminal 1 - API
+python -m uvicorn api.main:app --port 8000
+
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+```
+
 ### Struktur Proyek
 
 ```
-├── app/main.py              # Streamlit web UI
 ├── cli.py                   # Terminal client
 ├── config.py                # Konfigurasi (model, chunk size, dll)
+├── api/
+│   └── main.py              # FastAPI server
 ├── scripts/
-│   ├── build_index.py       # Bangun vector store dari PDF
-│   └── scrape_ojk.py        # (opsional) scrape artikel OJK
+│   └── build_index.py       # Bangun vector store dari PDF
 ├── src/
-│   ├── document_loader.py   # Load PDF
-│   ├── text_splitter.py     # Chunking dokumen
-│   ├── vector_store.py      # Interface ChromaDB
-│   ├── rag_chain.py         # RAG pipeline utama
-│   ├── prompt_templates.py  # Prompt untuk LLM
-│   ├── history.py           # Manajemen chat history per session
-│   └── embeddings.py        # Inisialisasi embedding model
+│   ├── rag/
+│   │   ├── chain.py         # RAG pipeline utama
+│   │   ├── prompts.py       # Prompt untuk LLM
+│   │   ├── store.py         # Interface ChromaDB
+│   │   └── history.py       # Manajemen chat history per session
+│   ├── document/
+│   │   ├── loader.py        # Load PDF
+│   │   └── splitter.py      # Chunking dokumen
+│   └── kuesioner/
+│       ├── data.py          # Load data kuesioner
+│       └── extract.py       # Ekstrak PDF kuesioner
+├── frontend/                # Next.js web UI
 ├── data/
-│   └── raw/                 # PDF sumber
+│   ├── raw/                 # PDF sumber
+│   └── kuesioner.json   # Data kuesioner (hasil ekstrak)
 ├── chroma_db/               # Vector store (auto-generated, jangan di-commit)
 └── requirements.txt
 ```
